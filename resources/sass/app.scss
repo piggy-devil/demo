@@ -1,3 +1,9 @@
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Nunito');
 
@@ -7,8 +13,35 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
-@tailwind base;
+.navbar-laravel {
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
 
-@tailwind components;
+.btn-info {
+    color: #fff;
+}
 
-@tailwind utilities;
+.channel-avatar {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    cursor: pointer;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+
+    .channel-avatar-overlay {
+        display: none;
+    }
+
+    &:hover {
+        .channel-avatar-overlay {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+    }
+}
