@@ -8,13 +8,14 @@ use Illuminate\Http\Request;
 use App\Exceptions\UserNotFoundException;
 use App\Http\Resources\Friend as FriendResource;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Validation\ValidationException;
 
 class FriendRequestController extends Controller
 {
     public function store()
     {
         $data = request()->validate([
-            'friend_id' => '',
+            'friend_id' => 'required',
         ]);
 
         try {
