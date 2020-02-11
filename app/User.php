@@ -3,13 +3,14 @@
 namespace App;
 
 use Illuminate\Support\Str;
+use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, HasApiTokens;
 
         /**
      * Indicates if the IDs are auto-incrementing.
