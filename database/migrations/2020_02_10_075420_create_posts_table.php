@@ -17,6 +17,7 @@ class CreatePostsTable extends Migration
             $table->uuid('id');
             $table->uuid('user_id');
             $table->text('body');
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }
