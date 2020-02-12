@@ -14,9 +14,9 @@ class CreateLikesTable extends Migration
     public function up()
     {
         Schema::create('likes', function (Blueprint $table) {
-            $table->uuid('id');
-            $table->uuid('post_id');
-            $table->uuid('user_id');
+            //$table->uuid('id');
+            $table->uuid('post_id')->nullable();
+            $table->uuid('user_id')->nullable();
             $table->timestamps();
         });
     }
