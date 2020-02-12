@@ -8,33 +8,17 @@ const getters = {
     posts: state => {
         return state.posts;
     },
-
     newsStatus: state => {
         return {
             postsStatus: state.postsStatus,
         }
     },
-
-    fetchUserPosts({commit, dispatch}, userId) {
-        commit('setPostsStatus', 'loading');
-
-        axios.get('/api/users/' + userId + '/posts')
-            .then(res => {
-                commit('setPosts', res.data);
-                commit('setPostsStatus', 'success');
-            })
-            .catch(error => {
-                commit('setPostsStatus', 'error');
-            });
-    },
-
     postMessage: state => {
         return state.postMessage;
     }
 };
 
 const actions = {
-
     fetchNewsPosts({commit, state}) {
         commit('setPostsStatus', 'loading');
 
@@ -47,7 +31,18 @@ const actions = {
                 commit('setPostsStatus', 'error');
             });
     },
+    fetchUserPosts({commit, dispatch}, userId) {
+        commit('setPostsStatus', 'loading');
 
+        axios.get('/api/users/' + userId + '/posts')
+            .then(res => {
+                commit('setPosts', res.data);
+                commit('setPostsStatus', 'success');
+            })
+            .catch(error => {
+                commit('setPostsStatus', 'error');
+            });
+    },
     postMessage({commit, state}) {
         commit('setPostsStatus', 'loading');
 
@@ -59,7 +54,6 @@ const actions = {
             .catch(error => {
             });
     },
-
     likePost({commit, state}, data) {
         axios.post('/api/posts/' + data.postId + '/like')
             .then(res => {
@@ -68,7 +62,6 @@ const actions = {
             .catch(error => {
             });
     },
-
     commentPost({commit, state}, data) {
         axios.post('/api/posts/' + data.postId + '/comment', { body: data.body })
             .then(res => {
@@ -94,9 +87,15 @@ const mutations = {
     },
     pushLikes(state, data) {
         state.posts.data[data.postKey].data.attributes.likes = data.likes;
+    },
+    pushComments(state, data) {
+        state.posts.data[data.postKey].data.attributes.comments = data.comments;
     }
 };
 
 export default {
-    state, getters, actions, mutations,
+    state,
+    getters,
+    actions,
+    mutations,
 }

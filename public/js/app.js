@@ -59715,27 +59715,27 @@ var getters = {
       postsStatus: state.postsStatus
     };
   },
-  fetchUserPosts: function fetchUserPosts(_ref, userId) {
+  postMessage: function postMessage(state) {
+    return state.postMessage;
+  }
+};
+var actions = {
+  fetchNewsPosts: function fetchNewsPosts(_ref) {
     var commit = _ref.commit,
-        dispatch = _ref.dispatch;
+        state = _ref.state;
     commit('setPostsStatus', 'loading');
-    axios.get('/api/users/' + userId + '/posts').then(function (res) {
+    axios.get('/api/posts').then(function (res) {
       commit('setPosts', res.data);
       commit('setPostsStatus', 'success');
     })["catch"](function (error) {
       commit('setPostsStatus', 'error');
     });
   },
-  postMessage: function postMessage(state) {
-    return state.postMessage;
-  }
-};
-var actions = {
-  fetchNewsPosts: function fetchNewsPosts(_ref2) {
+  fetchUserPosts: function fetchUserPosts(_ref2, userId) {
     var commit = _ref2.commit,
-        state = _ref2.state;
+        dispatch = _ref2.dispatch;
     commit('setPostsStatus', 'loading');
-    axios.get('/api/posts').then(function (res) {
+    axios.get('/api/users/' + userId + '/posts').then(function (res) {
       commit('setPosts', res.data);
       commit('setPostsStatus', 'success');
     })["catch"](function (error) {
@@ -59791,6 +59791,9 @@ var mutations = {
   },
   pushLikes: function pushLikes(state, data) {
     state.posts.data[data.postKey].data.attributes.likes = data.likes;
+  },
+  pushComments: function pushComments(state, data) {
+    state.posts.data[data.postKey].data.attributes.comments = data.comments;
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = ({

@@ -7,18 +7,15 @@ const getters = {
     user: state => {
         return state.user;
     },
-
     status: state => {
         return {
             user: state.userStatus,
             posts: state.postsStatus,
         };
     },
-
     friendship: state => {
-        return state.user.data.attributes.friendship;
+            return state.user.data.attributes.friendship;
     },
-
     friendButtonText: (state, getters, rootState) => {
         if (rootState.User.user.data.user_id === state.user.data.user_id) {
             return '';
@@ -35,26 +32,25 @@ const getters = {
     }
 };
 
-const actions = {
-    fetchUser({ commit, dispatch }, userId) {
+const actions = {fetchUser({commit,dispatch}, userId) {
         commit('setUserStatus', 'loading');
 
         axios.get('/api/users/' + userId)
-            .then(res => {
-                commit('setUser', res.data);
-                commit('setUserStatus', 'success');
-            })
-            .catch(error => {
-                commit('setUserStatus', 'error');
-            });
+        .then(res => {
+            commit('setUser', res.data);
+            commit('setUserStatus', 'success');
+        })
+        .catch(error => {
+            commit('setUserStatus', 'error');
+        });
     },
-
-    sendFriendRequest({ commit, getters }, friendId) {
+    sendFriendRequest({commit, getters}, friendId) {
         if (getters.friendButtonText !== 'Add Friend') {
             return;
         }
-
-        axios.post('/api/friend-request', { 'friend_id': friendId })
+        axios.post('/api/friend-request', {
+                'friend_id': friendId
+            })
             .then(res => {
                 commit('setUserFriendship', res.data);
             })
@@ -62,7 +58,6 @@ const actions = {
 
             });
     },
-
     acceptFriendRequest({commit, state}, userId) {
         axios.post('/api/friend-request-response', { 'user_id': userId, 'status': 1 })
             .then(res => {
@@ -71,7 +66,6 @@ const actions = {
             .catch(error => {
             });
     },
-
     ignoreFriendRequest({commit, state}, userId) {
         axios.delete('/api/friend-request-response/delete', { data: { 'user_id': userId }})
             .then(res => {
@@ -86,15 +80,12 @@ const mutations = {
     setUser(state, user) {
         state.user = user;
     },
-
     setUserFriendship(state, friendship) {
         state.user.data.attributes.friendship = friendship;
     },
-
     setUserStatus(state, status) {
         state.userStatus = status;
-    }
-
+    },
 };
 
 export default {
