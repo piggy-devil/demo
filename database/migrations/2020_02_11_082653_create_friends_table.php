@@ -14,9 +14,9 @@ class CreateFriendsTable extends Migration
     public function up()
     {
         Schema::create('friends', function (Blueprint $table) {
-            $table->uuid('id');
-            $table->uuid('user_id');
-            $table->uuid('friend_id');
+            $table->uuid('id')->nullable();
+            $table->uuid('user_id')->nullable();
+            $table->uuid('friend_id')->nullable();
             $table->tinyInteger('status')->nullable();
             $table->timestamp('confirmed_at')->nullable();
             $table->timestamps();
