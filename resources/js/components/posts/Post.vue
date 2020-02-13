@@ -15,7 +15,7 @@
             </div>
         </div>
 
-        <div class="w-full" v-if="post.data.attributes.image">
+        <div class="w-full" v-if="post.data.attributes.image.length">
             <img :src="post.data.attributes.image" alt="post image" class="w-full">
         </div>
 
@@ -40,22 +40,22 @@
             </button>
             <button class="flex justify-center py-2 rounded-lg text-sm text-gray-700 w-full  focus:outline-none"
                 @click="comments = ! comments">
-
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="fill-current w-5 h-5"><path d="M20.3 2H3.7C2 2 .6 3.4.6 5.2v10.1c0 1.7 1.4 3.1 3.1 3.1V23l6.6-4.6h9.9c1.7 0 3.1-1.4 3.1-3.1V5.2c.1-1.8-1.3-3.2-3-3.2zm1.8 13.3c0 1-.8 1.8-1.8 1.8H9.9L5 20.4V17H3.7c-1 0-1.8-.8-1.8-1.8v-10c0-1 .8-1.8 1.8-1.8h16.5c1 0 1.8.8 1.8 1.8v10.1zM6.7 6.7h10.6V8H6.7V6.7zm0 2.9h10.6v1.3H6.7V9.6zm0 2.8h10.6v1.3H6.7v-1.3z"/></svg>
                 <p class="ml-2">Comment</p>
             </button>
         </div>
+
         <div v-if="comments" class="border-t border-gray-400 p-4 pt-2">
             <div class="flex">
                 <input v-model="commentBody" type="text" name="comment" class="w-full pl-4 h-8 bg-gray-200 rounded-lg focus:outline-none" placeholder="Write your comment">
                 <button v-if="commentBody"
                     class="bg-gray-200 ml-2 px-2 py-1 rounded-lg focus:outline-none"
-                        @click="$store.dispatch('commentPost', { body: commentBody, postId: post.data.post_id, postKey: $vnode.key }); commentBody = ''">
+                    @click="$store.dispatch('commentPost', { body: commentBody, postId: post.data.post_id, postKey: $vnode.key }); commentBody = ''">
                     Post
                 </button>
             </div>
 
-            <div class="flex my-4 items-center" v-for="comment in post.data.attributes.comments.data" :key="comment.data.comment_id">
+            <div class="flex my-4 items-center" v-for="(comment, index) in post.data.attributes.comments.data" :key="index">
                 <div class="w-8">
                     <img :src="comment.data.attributes.commented_by.data.attributes.profile_image.data.attributes.path" alt="profile image for user" class="w-8 h-8 object-cover rounded-full">
                 </div>
@@ -80,11 +80,9 @@
 <script>
     export default {
         name: "Post",
-
         props: [
             'post',
         ],
-
         data: () => {
             return {
                 comments: false,

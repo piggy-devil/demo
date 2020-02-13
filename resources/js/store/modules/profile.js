@@ -10,7 +10,7 @@ const getters = {
     status: state => {
         return {
             user: state.userStatus,
-            posts: state.postsStatus,
+            // posts: state.postsStatus,
         };
     },
     friendship: state => {

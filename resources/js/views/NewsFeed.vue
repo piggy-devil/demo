@@ -9,9 +9,9 @@
 </template>
 
 <script>
+    import { mapGetters } from 'vuex';
     import NewPost from '../components/posts/NewPost';
     import Post from '../components/posts/Post';
-    import { mapGetters } from 'vuex';
 
     export default {
         name: "NewsFeed",

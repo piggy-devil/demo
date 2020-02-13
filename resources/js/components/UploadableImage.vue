@@ -8,8 +8,8 @@
 </template>
 
 <script>
-    import Dropzone from 'dropzone';
     import { mapGetters } from 'vuex';
+    import Dropzone from 'dropzone';
 
     export default {
         name: "UploadableImage",
@@ -23,10 +23,12 @@
         ],
         data: () => {
             return {
-                dropzone: null
+                dropzone: null,
+                // uploadedImage: null,
             }
         },
         mounted() {
+            // this.dropzone = new Dropzone(this.$refs.userImage, this.settings);
             if (this.authUser.data.user_id.toString() === this.$route.params.userId) {
                 this.dropzone = new Dropzone(this.$refs.userImage, this.settings);
             }
@@ -51,12 +53,16 @@
                         'X-CSRF-TOKEN': document.head.querySelector('meta[name=csrf-token]').content,
                     },
                     success: (e, res) => {
+                        // this.uploadedImage = res;
                         this.$store.dispatch('fetchAuthUser');
                         this.$store.dispatch('fetchUser', this.$route.params.userId);
                         this.$store.dispatch('fetchUserPosts', this.$route.params.userId);
                     }
                 };
             }
+            // imageObject() {
+            //     return this.uploadedImage || this.userImage;
+            // }
         }
     }
 </script>
